@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from const import STATUS_TYPE
-from services import get_humor, string_replace
+from core.const import STATUS_TYPE
+from core.services import get_humor, string_replace
 
 
 router = APIRouter()
