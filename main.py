@@ -1,25 +1,14 @@
 from fastapi import FastAPI
-from const import JOKE_TYPE, STATUS_TYPE, STORIES_TYPE
-
-from services import get_humor, string_replace
+from api.router import router as api_router
 
 
-app = FastAPI()
+def get_application() -> FastAPI:
+
+    application = FastAPI()
+
+    application.include_router(api_router)
+
+    return application
 
 
-@app.get("/joke")
-async def joke():
-    humor = get_humor(JOKE_TYPE)
-    return string_replace(humor)
-
-
-@app.get("/stories")
-async def stories():
-    humor = get_humor(STORIES_TYPE)
-    return string_replace(humor)
-
-
-@app.get("/status")
-async def status():
-    humor = get_humor(STATUS_TYPE)
-    return string_replace(humor)
+app = get_application()
