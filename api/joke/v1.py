@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-
 from core.const import JOKE_TYPE
 from core.services import get_humor, string_replace
 
