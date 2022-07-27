@@ -21,24 +21,32 @@ def test_start_page():
     assert result.status_code == 404
 
 
-def test_standart_requests():
-    async def _inner():
-        warnings.filterwarnings("ignore", category=DeprecationWarning)
-        url: str = f'http://127.0.0.1:8000/joke'
+async def performance_test(url: str, n_count: int = 10):
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-        async def standart_requests():
-            async with httpx.AsyncClient() as client:
-                response: httpx.Response = await client.get(url)
-                response.raise_for_status()
+    async def standart_requests():
+        response: httpx.Response = await default_get_requests(url)
+        response.raise_for_status()
 
-        tasks = [standart_requests() for _ in range(10)]
+    tasks = [standart_requests() for _ in range(n_count)]
 
-        start = time.time()
+    start = time.time()
 
-        await asyncio.gather(*tasks)
+    await asyncio.gather(*tasks)
 
-        end = time.time() - start
-        print(f'time {end:0.2f} seconds', file=sys.stderr)
-        print(f'mean time for 1 request: {end/10:0.2f} seconds')
-    asyncio.run(_inner())
+    end = time.time() - start
+    print(f'{url = }')
+    print(f'time {end:0.2f} seconds')
+    print(f'mean time for 1 request: {end/10:0.2f} seconds')
+
+
+def test_performance_test_v1():
+    asyncio.run(performance_test(url=f'http://127.0.0.1:8000/api/v1/joke'))
+    # mean time for 1 request: 0.22 seconds
+    assert True
+
+
+def test_performance_test_v2():
+    asyncio.run(performance_test(url=f'http://127.0.0.1:8000/api/v2/joke'))
+    # mean time for 1 request: 0.06 seconds
     assert True

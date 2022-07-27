@@ -43,3 +43,24 @@ def test_v1_stories():
 
     result: httpx.Response = asyncio.run(default_get_requests(url))
     assert result.status_code == 200
+
+
+def test_v2_joke():
+    url: str = 'http://127.0.0.1:8000/api/v2/joke'
+
+    result: httpx.Response = asyncio.run(default_get_requests(url))
+    assert result.status_code == 200
+
+
+def test_v2_status():
+    url: str = 'http://127.0.0.1:8000/api/v2/status'
+
+    result: httpx.Response = asyncio.run(default_get_requests(url))
+    assert result.status_code == 200
+
+
+def test_v2_stories():
+    url: str = 'http://127.0.0.1:8000/api/v2/stories'
+
+    result: httpx.Response = asyncio.run(default_get_requests(url))
+    assert result.status_code == 200
