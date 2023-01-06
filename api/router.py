@@ -1,8 +1,9 @@
 from fastapi import APIRouter
 
-from api.app import (
+from .app import (
     joke, stories, status
 )
+from .logged import logged
 
 
 deprected_router = APIRouter(deprecated=True)
@@ -16,3 +17,4 @@ router = APIRouter()
 router.include_router(joke.router_api, tags=["joke"])
 router.include_router(stories.router_api, tags=["stories"])
 router.include_router(status.router_api, tags=["status"])
+router.include_router(logged.router_api, tags=["logged"])
