@@ -11,6 +11,6 @@ router_api = APIRouter()
 
 
 @router_api.post("/v1/log_exc")
-async def status(a: LogExc):
-    logger.error(a.log_exc)
+async def logged_exception(log_exc: LogExc):
+    logger.error(f"Error: {log_exc.log_exc}")
     return {"status": True}
